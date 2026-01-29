@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Turns the first argument passed to this script into a variable for readability.
+
+DIRECTORY=$1
+
+# Checks if a path was passed as an argument. If not, executes the script in the
+# current directory
+
+if [[ -n "$DIRECTORY" ]]
+then
+    cd "${DIRECTORY}"
+fi
+
+# Calls the wordcount script every .5 seconds. Change as you see fit.
+
+watch -n .5 -t wordcount
