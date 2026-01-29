@@ -37,6 +37,8 @@ Well regardless, this sure is one way to do it.
 
 Alright, so get your dependencies in order first. Most of this script is plain old bash and GNU utilities, so it should be compatible with most Linux distros and even WSL.
 
+Also, this whole guide was written in like an hour after spending most of my day working on the script. It may need revising later.
+
 ### Step 1 - Install [markdown-word-count](https://pypi.org/project/markdown-word-count/)
 
 Make sure you have a recent version of Python 3 on your system, and the pipx package installer. Yes, you could probably do this with regular pip, but I prefer to have access to this utility system-wide. Once you have pipx up and running, just run this command:
@@ -135,3 +137,29 @@ Here are a couple of extra things you might want to check out:
 2. To get the typing sounds, I use the [Click Clack](https://github.com/Acylation/obsidian-click-clack) plugin for Obsidian, and the [Waveform]([url](https://obsproject.com/forum/resources/waveform.1423/)) plugin for OBS to give a visual representation of my typing (see the upper-right) corner in the screenshot or video.
 
 But most of all, have some fun with it!
+
+## Frequently asked questions that I made up
+
+### Why is it Linux-only?
+
+Because I'm not that good at batch scripting or Powershell, and I do my writing on Linux anyway.
+
+### Why not use [insert language or shell of your choice here]?
+
+Because I am, and this is important to understand, Not A Real Programmer. I am a rank fuckin' amateur, and you get what you get.
+
+### Did you use any AI?
+
+No.
+
+### Really?
+
+Yes. Fuck gen AI. I don't even use AI autocomplete. I make my own terrible mistakes, all on my own.
+
+### You suck at this and I could do it better!
+
+Do it, motherfucker! I dare you! Hell, I _**programmer dare you!**_ Make a better version of this, ideally as an Obsidian plugin that updates the word counts even faster, and I swear I will put this repo in read-only mode and acknowledge you as the superior coder. As long as you skip the AI... like I did.
+
+### I don't want to insult you; I just have some ideas/pull requests that might help your script improve.
+
+Again, as long as there's no gen AI crap, I'm in. Please, by all means, teach me your ways. And if anyone wants to contribute a Windows-compatible script to go alongside the Linux scripts, that'd be cool.
