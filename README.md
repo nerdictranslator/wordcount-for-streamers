@@ -50,7 +50,7 @@ Note: early drafts of my scripts used `wc -w` to count the words, but that only 
 
 ### Step 2 - Get the scripts
 
-Either clone this repository, or just download the files zipped. Grap `wordcount` and `wordwatcher` because you'll need both.
+Either clone this repository, or just download the files zipped. Grab `wordcount` and `wordwatcher` because you'll need both.
 
 ### Step 3 - Get the scripts ready to run
 
