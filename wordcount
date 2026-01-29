@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+
+## VARIABLES - all info gets stored in variables for later processing
+
+# Check to see if there are subdirectories in the main book folder
+
+SUBDIR=$(find . -maxdepth 1 -type d | wc -l)
+
+# Check to see if there are individual files in the main book folder
+
+TOPDIRFILE=$(find . -maxdepth 1 -type f -name *.md | wc -l)
+
+# Checks to see what the file name of the current working file is, 
+# as recorded in currentfile.txt
+
+CURRENTFILECHECK=$(cat $HOME/streaming/currentfile.txt)
+
+# Checks to see what the name of the current working subfolder is, 
+# as recorded in currentfolder.txt
+
+CURRENTFOLDERCHECK=$(cat $HOME/streaming/currentfolder.txt)
+
+# Checks to see what the word count of the current working file is, 
+# as recorded in currentcount.txt
+
+CURRENTCOUNTCHECK=$(cat $HOME/streaming/currentcount.txt)
+
+# Checks to see what the full word count of the book is, 
+# as recorded in fullcount.txt
+
+FULLCOUNTCHECK=$(cat $HOME/streaming/fullcount.txt)
+
+# Determines which subfolder the most recently-edited file is in, if any.
+
+CURRENTFOLDER=$(find . -type f -exec stat --printf '%Y %n\0' {} \; | sort -znr | sed -zn '1,1{s/[^ ]\+ //; p}' | xargs -0 echo | sed -e 's,\./,,' -e 's,.[^/]*$,,')
+
+# Determines what the name of the most recently-edited file is, 
+# without the ".md" suffix.
+
+CURRENTFILE=$(find . -type f -exec stat --printf '%Y %n\0' {} \; | sort -znr | sed -zn '1,1{s/[^ ]\+ //; p}' | xargs -0 basename -s .md)
+
+# Determines the current word count of the whole book folder.
+# This if/else statement works by determining if the book folder is populated by 
+# individual files, subfolders with markdown files, or both. As you can see,
+# the command to count the words in all the files is different in each case.
+
+if [[ "$SUBDIR" -gt 1 ]] && [[ "$TOPDIRFILE" -gt 0 ]]
+then
+    FULLCOUNT="$(mwc {*.md,*/*.md})"
+elif [[ "$SUBDIR" -gt 1 ]] && [[ "$TOPDIRFILE" -eq 0 ]]
+then
+    FULLCOUNT="$(mwc */*.md)"
+elif [[ "$SUBDIR" -eq 1 ]] && [[ "$TOPDIRFILE" -gt 0 ]]
+then
+    FULLCOUNT="$(mwc *.md)"
+else
+    echo "You need to put some markdown files here"
+fi
+
+# Determines the word count of the most recently edited file.
+
+CURRENTCOUNT="$(find -type f -exec stat --printf '%Y %n\0' {} \; | sort -znr | sed -zn '1,1{s/[^ ]\+ //; p}' | xargs -0 mwc)"
+
+## THE PART WHERE IT WRITES ALL THE DATA TO TEXT FILES
+
+# This if/else statement checks to see if the current full word counts &
+# the word count for the current file are the same as what's listed in
+# fullcount.txt and currentcount.txt. When both files don't match, the updated
+# word count values are written to their respective text files. 
+
+if [[ "$CURRENTCOUNTCHECK" != "$CURRENTCOUNT" ]] && [[ "$FULLCOUNTCHECK" != "$FULLCOUNT" ]]
+then
+    echo "${FULLCOUNT}" > $HOME/streaming/fullcount.txt
+    echo "${CURRENTCOUNT}" > $HOME/streaming/currentcount.txt
+fi
+
+# The next two if/else statements do basically the same thing as above, but
+# for the name of the current subfolder, if any, and the name of the most
+# recently-edited file. Comment these out if you don't want this feature,
+# as well as the relevant variable checks above.
+
+if [[ "$CURRENTFOLDERCHECK" != "$CURRENTFOLDER" ]]
+then
+    echo "$CURRENTFOLDER" > $HOME/streaming/currentfolder.txt
+fi
+
+if [[ "$CURRENTFILECHECK" != "$CURRENTFILE" ]]
+then
+    echo "$CURRENTFILE" > $HOME/streaming/currentfile.txt
+fi
+
+# Just a little comment to let you see the script is running in
+# your terminal.
+
+echo "Watching word count"
