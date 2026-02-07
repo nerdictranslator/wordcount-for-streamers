@@ -25,34 +25,26 @@ Well regardless, this sure is one way to do it.
 * Some familiarity with the command line.
 * Linux
     * You could probably get this to work on Windows via WSL, but I won't be testing that any time soon.
-* Python
-    * And the pipx package installer, see your distro's documentation for installation instructions.
-    * The markdown-word-count package, installed via pipx for convenience
-* A folder full of markdown files, subfolders full of markdown files, or both.
-    * Yes, this was specifically designed for use with markdown.
-    * I'm using Obsidian as my editor, but any text editor will do.
+* A folder full of: markdown files, subfolders full of Markdown files, or both.
+    * Yes, this was specifically designed for use with Markdown.
+    * I'm using Obsidian as my editor, but any text editor will do, especially if it auto saves.
 * A desire to actually be this goddamned nerdy.
+
+Note: A previous version of this script made use of the markdown-word-count Python package as a dependency. I have replaced it with a simple `sed` command that strips everything that doesn't look like a word for simplicity.
+
+**Warning:** This script _will_ count words in a file's front matter, but the mwc package had the same issue, so no change there. However, this new version of the script will also count words in code blocks, at present. 
 
 ## Instructions for relative Linux newbs
 
-Alright, so get your dependencies in order first. Most of this script is plain old bash and GNU utilities, so it should be compatible with most Linux distros and even WSL.
+Alright, so get your dependencies in order first. All of this script is comprised of plain old Bash and GNU utilities. It should be compatible with most Linux distros, and even WSL.
 
 Also, this whole guide was written in like an hour after spending most of my day working on the script. It may need revising later.
 
-### Step 1 - Install [markdown-word-count](https://pypi.org/project/markdown-word-count/)
-
-Make sure you have a recent version of Python 3 on your system, and the pipx package installer. Yes, you could probably do this with regular pip, but I prefer to have access to this utility system-wide. Once you have pipx up and running, just run this command:
-
-```bash
-pipx install markdown-word-count
-```
-Note: early drafts of my scripts used `wc -w` to count the words, but that only ends up counting bits of Markdown syntax like `##` and `---` as words, hence the need for the Python package.
-
-### Step 2 - Get the scripts
+### Step 1 - Get the scripts
 
 Either clone this repository, or just download the files zipped. Grab `wordcount` and `wordwatcher` because you'll need both.
 
-### Step 3 - Get the scripts ready to run
+### Step 2 - Get the scripts ready to run
 
 You can do the following in any order, really:
 
@@ -61,7 +53,7 @@ You can do the following in any order, really:
 Run `chmod +x wordcount` and `chmod +x wordwatcher`, or use the Properties dialogue in your favorite file browser to mark them as executable.
 
 #### Place the scripts in your PATH
-This is soo you can run the scripts from anywhere by just typing `wordwatcher /your/book/folder/here`.
+This is so you can run the scripts from anywhere by just typing `wordwatcher /your/book/folder/here`.
 
 I accomplish this by having a dedicated folder for my own scripts in my home folder. So, if your home folder is located at `/home/yourusername/`, you could create a folder called `scripts` in your home folder, and put the two files you downloaded in there. 
 
@@ -71,9 +63,9 @@ Then, open your .bashrc file (located at `/home/yourusername/.bashrc`) and add t
 PATH=$PATH:$HOME/scripts
 ```
 
-Then run `source $HOME/.bashrc` in your terminal to update the configuration.
+Then run `source $HOME/.bashrc` in your terminal to update the configuration, so typing `wordwatcher` will run the script.
 
-### Step 4 - Prepare your folders
+### Step 3 - Prepare your folders
 
 So first, you need to make a folder called `streaming` in your home folder, e.g. `/home/yourusername/streaming`. When you run the scripts, the text files that you'll be using for the stream will be created in that folder.
 
@@ -102,7 +94,7 @@ Once you have everything organized, you're ready to start.
 
 **Warning:** If you use sub-sub folders with markdown files inside of those, this script may fail entirely. Empty sub-folders may also cause it to fail. I'll see if I can whip up a fix for that at a later date. 
 
-### Step 5 - Run the scripts
+### Step 4 - Run the scripts
 
 You can do this in two ways:
 
@@ -115,9 +107,9 @@ Side note: I use the Terminal plugin for Obsidian so I can just run the scripts 
 
 ![A screenshot of my Obsidian setup, with a terminal in the lower-right corner. Yours may look a bit different.](Obsidian.png)
 
-### Step 6 - Set up your streaming scene
+### Step 5 - Set up your streaming scene
 
-With OBS, it's pretty simple. Just add text sources to your scene, go right click on them, and set them to display text from your files in the streaming folder.
+With OBS, it's pretty simple. Just add text sources to your scene, go right click on them, and set them to display text from your files in the streaming folder you made earlier.
 
 * currentcount.txt will contain the word count of whichever file in your book folder you edited last.
 * fullcount.txt will contain the word count for the entire book folder (well, all the words in markdown files).
@@ -128,7 +120,7 @@ Just add those text files to your scene, style the text however you want, place 
 
 ![A screenshot featuring OBS and one of the text sources all set up](OBS-wordcount-setup.png)
 
-### Step 7 - Go live!
+### Step 6 - Go live!
 
 Get cracking and have some fun writing on stream, and watch the number go up.
 
@@ -152,14 +144,10 @@ Because I am, and this is important to understand, Not A Real Programmer. I am a
 
 No.
 
-### Really?
-
-Yes. Fuck gen AI. I don't even use AI autocomplete. I make my own terrible mistakes, all on my own.
-
 ### You suck at this and I could do it better!
 
-Do it, motherfucker! I dare you! Hell, I _**programmer dare you!**_ Make a better version of this, ideally as an Obsidian plugin that updates the word counts even faster, and I swear I will put this repo in read-only mode and acknowledge you as the superior coder. As long as you skip the AI... like I did.
+Rude. But if you feel compelled to make an Obsidian plugin that does this better, I'm in.
 
 ### I don't want to insult you; I just have some ideas/pull requests that might help your script improve.
 
-Again, as long as there's no gen AI crap, I'm in. Please, by all means, teach me your ways. And if anyone wants to contribute a Windows-compatible script to go alongside the Linux scripts, that'd be cool.
+As long as there's no gen AI crap, I'm in. Please, by all means, teach me your ways. And if anyone wants to contribute a Windows-compatible script to go alongside the Linux scripts, that'd be cool.
