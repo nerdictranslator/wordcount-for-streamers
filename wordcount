@@ -8,7 +8,7 @@ SUBDIR=$(find . -maxdepth 1 -type d | wc -l)
 
 # Check to see if there are individual files in the main book folder
 
-TOPDIRFILE=$(find . -maxdepth 1 -type f -name *.md | wc -l)
+TOPDIRFILE=$(find . -maxdepth 1 -type f -name '*.md' | wc -l)
 
 # Checks to see what the file name of the current working file is, 
 # as recorded in currentfile.txt
@@ -46,13 +46,13 @@ CURRENTFILE=$(find . -type f -exec stat --printf '%Y %n\0' {} \; | sort -znr | s
 
 if [[ "$SUBDIR" -gt 1 ]] && [[ "$TOPDIRFILE" -gt 0 ]]
 then
-    FULLCOUNT="$(mwc {*.md,*/*.md})"
+    FULLCOUNT="$(cat {*.md,*/*.md} | sed -e 's/[^ a-zA-Z\x27]//g' | wc -w)"
 elif [[ "$SUBDIR" -gt 1 ]] && [[ "$TOPDIRFILE" -eq 0 ]]
 then
-    FULLCOUNT="$(mwc */*.md)"
+    FULLCOUNT="$(cat */*.md | sed -e 's/[^ a-zA-Z\x27]//g' | wc -w)"
 elif [[ "$SUBDIR" -eq 1 ]] && [[ "$TOPDIRFILE" -gt 0 ]]
 then
-    FULLCOUNT="$(mwc *.md)"
+    FULLCOUNT="$(cat *.md | sed -e 's/[^ a-zA-Z\x27]//g' | wc -w)"
 else
     echo "You need to put some markdown files here"
 fi
@@ -76,8 +76,7 @@ fi
 
 # The next two if/else statements do basically the same thing as above, but
 # for the name of the current subfolder, if any, and the name of the most
-# recently-edited file. Comment these out if you don't want this feature,
-# as well as the relevant variable checks above.
+# recently-edited file.
 
 if [[ "$CURRENTFOLDERCHECK" != "$CURRENTFOLDER" ]]
 then
