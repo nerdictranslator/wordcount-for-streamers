@@ -13,22 +13,22 @@ TOPDIRFILE=$(find . -maxdepth 1 -type f -name '*.md' | wc -l)
 # Checks to see what the file name of the current working file is, 
 # as recorded in currentfile.txt
 
-CURRENTFILECHECK=$(cat $HOME/streaming/currentfile.txt)
+CURRENTFILECHECK=$(cat "$HOME/streaming/currentfile.txt")
 
 # Checks to see what the name of the current working subfolder is, 
 # as recorded in currentfolder.txt
 
-CURRENTFOLDERCHECK=$(cat $HOME/streaming/currentfolder.txt)
+CURRENTFOLDERCHECK=$(cat "$HOME/streaming/currentfolder.txt")
 
 # Checks to see what the word count of the current working file is, 
 # as recorded in currentcount.txt
 
-CURRENTCOUNTCHECK=$(cat $HOME/streaming/currentcount.txt)
+CURRENTCOUNTCHECK=$(cat "$HOME/streaming/currentcount.txt")
 
 # Checks to see what the full word count of the book is, 
 # as recorded in fullcount.txt
 
-FULLCOUNTCHECK=$(cat $HOME/streaming/fullcount.txt)
+FULLCOUNTCHECK=$(cat "$HOME/streaming/fullcount.txt")
 
 # Determines which subfolder the most recently-edited file is in, if any.
 
@@ -70,8 +70,8 @@ CURRENTCOUNT="$(find -type f -exec stat --printf '%Y %n\0' {} \; | sort -znr | s
 
 if [[ "$CURRENTCOUNTCHECK" != "$CURRENTCOUNT" ]] && [[ "$FULLCOUNTCHECK" != "$FULLCOUNT" ]]
 then
-    echo "${FULLCOUNT}" > $HOME/streaming/fullcount.txt
-    echo "${CURRENTCOUNT}" > $HOME/streaming/currentcount.txt
+    echo "${FULLCOUNT}" > "$HOME/streaming/fullcount.txt"
+    echo "${CURRENTCOUNT}" > "$HOME/streaming/currentcount.txt"
 fi
 
 # The next two if/else statements do basically the same thing as above, but
@@ -80,12 +80,12 @@ fi
 
 if [[ "$CURRENTFOLDERCHECK" != "$CURRENTFOLDER" ]]
 then
-    echo "$CURRENTFOLDER" > $HOME/streaming/currentfolder.txt
+    echo "$CURRENTFOLDER" > "$HOME/streaming/currentfolder.txt"
 fi
 
 if [[ "$CURRENTFILECHECK" != "$CURRENTFILE" ]]
 then
-    echo "$CURRENTFILE" > $HOME/streaming/currentfile.txt
+    echo "$CURRENTFILE" > "$HOME/streaming/currentfile.txt"
 fi
 
 # Just a little comment to let you see the script is running in
