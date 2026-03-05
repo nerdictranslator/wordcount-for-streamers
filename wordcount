@@ -59,7 +59,7 @@ fi
 
 # Determines the word count of the most recently edited file.
 
-CURRENTCOUNT="$(find -type f -exec stat --printf '%Y %n\0' {} \; | sort -znr | sed -zn '1,1{s/[^ ]\+ //; p}' | xargs -0 mwc)"
+CURRENTCOUNT="$(find -type f -exec stat --printf '%Y %n\0' {} \; | sort -znr | sed -zn '1,1{s/[^ ]\+ //; p}' | xargs -0 cat | sed -e 's/[^ a-zA-Z\x27]//g' | wc -w)"
 
 ## THE PART WHERE IT WRITES ALL THE DATA TO TEXT FILES
 
